@@ -9,7 +9,7 @@ import schedule
 import threading
 import time
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 SEQUENCE = [
     'c101', 'c107', 'c108', 'c105', 'c102',
@@ -73,7 +73,7 @@ def job_plan_day(mqtt):
     logging.info('Sunset is at %s' % sunset)
     schedule.every().day.at(dawn).do(job_lights_off, mqtt)
     schedule.every().day.at(sunset).do(job_lights_on, mqtt)
-    logging.info('Job started: job_plan_day')
+    logging.info('Job finished: job_plan_day')
 
 
 def on_connect(client, userdata, flags, rc):
