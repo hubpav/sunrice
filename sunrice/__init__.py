@@ -9,7 +9,7 @@ import schedule
 import threading
 import time
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 SEQUENCE = [
     'c101', 'c107', 'c108', 'c105', 'c102',
@@ -21,20 +21,22 @@ lock = threading.RLock()
 
 def plc_latch(mqtt):
     mqtt.publish('plc/c200/set', 'true', qos=1)
+    time.sleep(0.5)  # TODO Remove after controller fix
 
 
 def plc_out_set(mqtt, output, value):
     mqtt.publish('plc/%s/set' % output, 'true' if value else 'false', qos=1)
+    time.sleep(0.5)
 
 
 def worker_lights_on(mqtt):
     lock.acquire()
+    plc_out_set(mqtt, 'y804', True)
+    plc_out_set(mqtt, 'y402', True)
     for sequence in SEQUENCE:
         logging.debug('Switching on `%s`' % sequence)
         plc_out_set(mqtt, sequence, True)
-        time.sleep(0.5)  # TODO Remove after controller fix
         plc_latch(mqtt)
-        time.sleep(0.5)
     lock.release()
 
 
@@ -43,10 +45,10 @@ def worker_lights_off(mqtt):
     for sequence in SEQUENCE[::-1]:
         logging.debug('Switching off `%s`' % sequence)
         plc_out_set(mqtt, sequence, False)
-        time.sleep(0.5)  # TODO Remove after controller fix
         plc_latch(mqtt)
-        time.sleep(0.5)
     lock.release()
+    plc_out_set(mqtt, 'y402', False)
+    plc_out_set(mqtt, 'y804', False)
 
 
 def job_lights_on(mqtt):
