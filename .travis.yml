@@ -8,5 +8,6 @@ deploy:
   user: 'hubpav'
   password:
     secure: 'adChQ0gaDROvdSW0IsuCEfZ67+hcwRmNOAuonyvvr+14DP+1YC48b3TKmMo5zmYYBH8EqHEm6qbWeED0UeckIBC6VAKJq79qRHkQ1V3YHlThkPx+Ks0vnGq7QqAhoxI9kzdosN6j0BHzeAeqMIlNoM12W/7bcNzsWhYRcL+0fK+pLRT2JKERIuiuF4tVgnWGEn1E1EXp6+hOUh/GAOYwPaRtE7WIIrntFrdbbjYdGgK+9l0xi/b/ADES74y6PvxO4MaHE7TZ1O4QUVTJeR3fQZX3y0MxGPcU7HUzTFhXFBU6vHRftFfx/ggXdIxM+eEVJei2srZ0jBU37io6kD6tzjVv6/qAj1BunsOtPQRayPyZrh4N5mPJpinnih4tDuCBoULHDaM6A8vg/12Rr8eYXWiAbu1bHFDqV3/lVpTADNrMzIU6UV0Kvz55G94nFNZBMXr/h/g1/IcaCMWecOY4jnBC0JXIcTylSN7le6ws7q2c65XQOCEsRmTQCs5QEQkLMlsSnanPaeZ/TqKqLolrv/M8TwPpcQiUob/YvOdjCoDZOW/BfkYSwwdAaIBLTiueDA05SZHUaO0gmyPznvvotOFxt+xXOOBIMVWOIB0I0uaqxRUOJ3qfCwiK1x8OchxJCirCvyr3Ue6b4f1pYKA4/YFIq+flA3ZdiVJmyW/vOQQ='
+  distributions: 'sdist bdist_wheel'
   on:
     tags: true
