@@ -9,7 +9,7 @@ import schedule
 import threading
 import time
 
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 
 SEQUENCE = [
     'c101', 'c107', 'c108', 'c105', 'c102',
