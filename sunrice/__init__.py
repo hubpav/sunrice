@@ -9,12 +9,15 @@ import schedule
 import threading
 import time
 
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 SEQUENCE = [
     'c101', 'c107', 'c108', 'c105', 'c102',
     'c103', 'c106', 'c111', 'c109', 'c104'
 ]
+
+logging.basicConfig(format='%(asctime)s <%(levelname)s> %(message)s',
+                    level=logging.DEBUG, datefmt="%Y-%m-%dT%H:%M:%S")
 
 lock = threading.RLock()
 
@@ -31,8 +34,6 @@ def plc_out_set(mqtt, output, value):
 
 def worker_lights_on(mqtt):
     lock.acquire()
-    plc_out_set(mqtt, 'y804', True)
-    plc_out_set(mqtt, 'y402', True)
     for sequence in SEQUENCE:
         logging.debug('Switching on `%s`' % sequence)
         plc_out_set(mqtt, sequence, True)
@@ -47,8 +48,6 @@ def worker_lights_off(mqtt):
         plc_out_set(mqtt, sequence, False)
         plc_latch(mqtt)
     lock.release()
-    plc_out_set(mqtt, 'y402', False)
-    plc_out_set(mqtt, 'y804', False)
 
 
 def job_lights_on(mqtt):
@@ -104,8 +103,6 @@ def on_message(client, userdata, msg):
 @click.version_option(version=__version__)
 def main(host, port):
     try:
-        logging.basicConfig(format='%(asctime)s <%(levelname)s> %(message)s',
-                            level=logging.DEBUG, datefmt="%Y-%m-%dT%H:%M:%S")
         logging.getLogger('schedule').propagate = False
         logging.info('Program started')
         mqtt = paho.mqtt.client.Client()
